@@ -1,0 +1,27 @@
+{
+  "how_to_read": [
+    "Turn the ignition off.",
+    "Find the diagnosis connector in the engine bay (driver side, near the shock tower / fuse box area).",
+    "Jumper the TEN terminal to the GND terminal with a short wire or paper clip.",
+    "Turn the ignition on without starting the engine.",
+    "Count the check engine light flashes: long flashes (about 1.2 s) are tens, short flashes (about 0.4 s) are ones. Codes repeat after a pause.",
+    "If the light stays off after it first lights up, no codes are stored.",
+    "To clear codes after a repair: disconnect the negative battery cable for at least 20 seconds and press the brake pedal (this drains the ECU memory), reconnect, then check again."
+  ],
+  "codes": [
+    {"code": "01", "circuit": "Ignition pulse (igniter / coil)", "checks": "Coil pack and igniter wiring, igniter connector, coil resistance."},
+    {"code": "02", "circuit": "Ne signal (crank position from the CAS)", "checks": "CAS connector and wiring, CAS O-ring oil intrusion, CAS itself."},
+    {"code": "03", "circuit": "G signal (cylinder ID from the CAS)", "checks": "Same as code 02."},
+    {"code": "08", "circuit": "Airflow meter (AFM)", "checks": "AFM connector, sticking vane flap, intake leak between AFM and throttle body."},
+    {"code": "09", "circuit": "Coolant temperature sensor (ECU sensor, not the gauge sender)", "checks": "Sensor resistance cold vs hot, connector corrosion."},
+    {"code": "10", "circuit": "Intake air temperature sensor (inside the AFM)", "checks": "AFM connector; the sensor is part of the AFM."},
+    {"code": "12", "circuit": "Throttle position sensor (TPS)", "checks": "TPS adjustment (idle switch clicks just off closed throttle), connector."},
+    {"code": "14", "circuit": "Atmospheric pressure sensor (inside the ECU)", "checks": "Usually the ECU; check ECU grounds first."},
+    {"code": "15", "circuit": "Oxygen sensor (lean or inactive)", "checks": "Old O2 sensor, exhaust leak ahead of the sensor, vacuum leak, low fuel pressure."},
+    {"code": "17", "circuit": "Feedback system (closed-loop fuel control)", "checks": "O2 sensor, vacuum leaks, injectors, fuel pressure."},
+    {"code": "25", "circuit": "Pressure regulator control solenoid", "checks": "Solenoid, vacuum lines, wiring."},
+    {"code": "26", "circuit": "Purge control solenoid", "checks": "Solenoid, vacuum lines, charcoal canister."},
+    {"code": "34", "circuit": "Idle speed control (ISC / BAC) valve", "checks": "Carbon in the ISC valve, connector, idle air adjust screw setting."}
+  ],
+  "verify": true
+}

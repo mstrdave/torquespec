@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Torque Spec</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>Torque Spec</h1>
+      <p>1990 Mazda MX-5 Miata &middot; 1.6 L B6ZE</p>
+    </div>
+    <nav>
+      <button class="tab active" data-tab="diagnose">Diagnose</button>
+      <button class="tab" data-tab="torque">Torque specs</button>
+      <button class="tab" data-tab="codes">Flash codes</button>
+      <button class="tab" data-tab="issues">Known issues</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="diagnose" class="panel active">
+      <div id="llm-off" class="notice" hidden>
+        Diagnosis is off because the server has no <code>ANTHROPIC_API_KEY</code>. Specs, codes and known issues still work.
+      </div>
+      <div id="chat" aria-live="polite">
+        <div class="msg assistant">
+          Tell me what the car is doing. Useful details: when it happens (cold, hot, idle, under load),
+          any noises or smells, flash codes, mileage and any recent work.
+        </div>
+      </div>
+      <form id="chat-form">
+        <textarea id="chat-input" rows="3" placeholder="e.g. Idle hunts between 600 and 1200 rpm once warm, stalls at stop lights. Code 34 flashes."></textarea>
+        <div class="row">
+          <button type="button" id="reset" class="ghost">New diagnosis</button>
+          <button type="submit" id="send">Send</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="torque" class="panel">
+      <input id="torque-q" type="search" placeholder="Search: head bolts, lug, drain plug...">
+      <p class="hint">Values marked <span class="verify">verify</span> are less certain. Always confirm with the factory workshop manual.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Component</th><th>Torque</th><th>N·m</th><th>Notes</th></tr></thead>
+          <tbody id="torque-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="codes" class="panel">
+      <h2>How to read codes</h2>
+      <ol id="code-steps"></ol>
+      <h2>Codes</h2>
+      <div id="code-list" class="cards"></div>
+    </section>
+
+    <section id="issues" class="panel">
+      <div id="issue-list" class="cards"></div>
+    </section>
+  </main>
+
+  <footer>Not a substitute for a workshop manual or a mechanic. Use jack stands.</footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
