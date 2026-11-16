@@ -87,8 +87,26 @@ class Diagnoser:
             yield "\n\n_(Answer cut off. Ask me to continue.)_"
 
 
+def load_dotenv(path: str = ".env") -> None:
+    """Read KEY=VALUE lines from a .env file into the environment without overriding existing values."""
+    try:
+        with open(path, encoding="utf-8") as f:
+            lines = f.read().splitlines()
+    except FileNotFoundError:
+        return
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        value = value.strip().strip('"').strip("'")
+        if value:
+            os.environ.setdefault(key.strip(), value)
+
+
 def make_client() -> anthropic.AsyncAnthropic | None:
     """Return a client if credentials are available, else None (the app still serves reference data)."""
+    load_dotenv()
     try:
         client = anthropic.AsyncAnthropic()
     except anthropic.AnthropicError:

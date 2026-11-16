@@ -50,3 +50,19 @@ def test_prompt_is_cacheable_and_hints_are_appended():
     assert system[0]["cache_control"] == {"type": "ephemeral"}
     msgs = build_messages(kb(), [ChatTurn("user", "rough idle that surges when warm")])
     assert "Rough or hunting idle" in msgs[-1]["content"]
+
+
+def test_load_dotenv_reads_without_overriding(tmp_path, monkeypatch):
+    from torquespec.diagnose import load_dotenv
+
+    env = tmp_path / ".env"
+    env.write_text('# comment\nTS_A="one"\nTS_B=two\nTS_EMPTY=\n', encoding="utf-8")
+    monkeypatch.setenv("TS_B", "kept")
+    monkeypatch.delenv("TS_A", raising=False)
+    monkeypatch.delenv("TS_EMPTY", raising=False)
+    load_dotenv(str(env))
+    import os
+    assert os.environ["TS_A"] == "one"
+    assert os.environ["TS_B"] == "kept"
+    assert "TS_EMPTY" not in os.environ
+    load_dotenv(str(tmp_path / "missing.env"))  # no error

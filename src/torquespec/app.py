@@ -85,8 +85,11 @@ def create_app(diagnoser: Diagnoser | None = None) -> FastAPI:
                     yield f"data: {json.dumps({'text': text})}\n\n"
             except anthropic.RateLimitError:
                 yield f"data: {json.dumps({'error': 'Rate limited. Wait a moment and try again.'})}\n\n"
+            except anthropic.AuthenticationError:
+                yield f"data: {json.dumps({'error': 'The API key was rejected. Check ANTHROPIC_API_KEY.'})}\n\n"
             except anthropic.APIStatusError as e:
-                yield f"data: {json.dumps({'error': f'API error {e.status_code}.'})}\n\n"
+                detail = e.body.get("error", {}).get("message", "") if isinstance(e.body, dict) else ""
+                yield f"data: {json.dumps({'error': f'API error {e.status_code}. {detail}'.strip()})}\n\n"
             except anthropic.APIConnectionError:
                 yield f"data: {json.dumps({'error': 'Could not reach the model. Check the connection.'})}\n\n"
             yield "data: [DONE]\n\n"
